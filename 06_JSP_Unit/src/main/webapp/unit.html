@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:white;
+    font-family:Arial;
+}
+
+/* 전체 카드 */
+.box{
+    background-color:#cfefff;
+    width:350px;
+    height:420px;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* 헤더 */
+.header{
+    background:white;
+    text-align:center;
+    padding:20px;
+    font-size:22px;
+    font-weight:bold;
+    color:black;
+}
+
+/* 바디 */
+.body{
+    background:#cfefff;
+    padding:30px;
+}
+
+/* 라벨 버튼 */
+.label-btn{
+    display:inline-block;
+    background:#2a7de1;
+    color:white;
+    padding:6px 12px;
+    border-radius:5px;
+    margin-bottom:5px;
+    transition:0.3s;
+}
+
+/* 호버 */
+.label-btn:hover{
+    background:#0d5fcc;
+}
+
+/* 입력 */
+input, select{
+    width:100%;
+    padding:10px;
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+/* 푸터 */
+.footer{
+    background:white;
+    padding:20px;
+    text-align:center;
+}
+
+/* 변환 버튼 */
+button{
+    padding:10px 25px;
+    background:#2a7de1;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0d5fcc;
+}
+
+
+
+</style>
+
+
+</head>
+<body>   
+
+         
+            <div class="box">
+
+            <div class="header"> 
+                단위 변환
+                </div>
+
+           <div class="body"></div>
+          
+         <form action="unit.jsp">  
+             <div class="label-btn">변환할 값</div>
+           <input name="value" placeholder="숫자만 입력하세요">
+
+              <div class="label-btn">단위</div>
+                 <select name="unit">
+                  <option>cm → inch</option>
+                  <option>㎡ → 평</option>
+                  <option>℃ → ℉</option>
+                  <option>km/h → mi/h</option>
+                                  </select>
+
+                    
+
+<div class="footer">
+<button type="submit">변환</button>
+</div>
+         </form>
+</body>
+</html>
