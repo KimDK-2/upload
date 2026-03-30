@@ -1,0 +1,8 @@
+Team : PearlSeat
+
+manager : Abuki Sugihara 
+
+member : 
+- Denber
+- Shunugi
+- Kim Jin ho

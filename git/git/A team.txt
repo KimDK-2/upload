@@ -1,0 +1,8 @@
+Team : TechnoPro IT 
+
+manager : Takahashi Takehiro
+
+members : 
+ - KIM Do Hyoek
+ - Inoki Suihara
+ - Yamagata Mitsuko

@@ -1,0 +1,9 @@
+Team : EaglesTech
+
+manager : Gold Jewrley
+
+member : 
+- Yoo Seung ho
+- Minato Sanae
+- Tsukimoto Yuga
+- Alex Graham

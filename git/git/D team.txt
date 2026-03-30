@@ -1,0 +1,8 @@
+team: AppleTree.
+
+manager: Clara
+
+members:
+  - Puedy
+  - Eggome
+  - Newtah
