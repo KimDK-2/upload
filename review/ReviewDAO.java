@@ -1,0 +1,209 @@
+package com.kdh.board.review;
+
+import com.kdh.board.main.DBManager;
+import com.kdh.board.movie.MovieDTO;
+
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+public class ReviewDAO {
+
+    public static final ReviewDAO RDAO = new ReviewDAO();
+
+    public ReviewDAO() {
+    }
+
+    public ArrayList<ReviewVO> showAllReview(HttpServletRequest request) {
+         Connection con = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         String sql = "select * from review_test order by r_date";
+         try {
+             con = DBManager.connect();
+             pstmt = con.prepareStatement(sql);
+             rs = pstmt.executeQuery();
+
+             ReviewVO vo = null;
+             ArrayList<ReviewVO> reviews = new ArrayList<>();
+             while (rs.next()) {
+                 vo = new ReviewVO();
+                 vo.setNo(rs.getInt("r_no"));
+                 vo.setTitle(rs.getString("r_title"));
+                 vo.setTxt(rs.getString("r_txt"));
+                 vo.setDate(rs.getDate("r_date"));
+                 reviews.add(vo);
+             }
+             return reviews;
+
+         }catch (Exception e){
+             e.printStackTrace();
+         } finally {
+             DBManager.close(rs, pstmt, con);
+         }
+
+        return null;
+    }
+
+    public void addReview(HttpServletRequest req) {
+       Connection con = null;
+       PreparedStatement pstmt = null;
+
+       String sql = "insert into review_test values " +
+               "(review_test_seq.nextval, ?, ?, sysdate)";
+       try {
+          con = DBManager.connect();
+          pstmt = con.prepareStatement(sql);
+          req.setCharacterEncoding("utf-8");
+          pstmt.setString(1, req.getParameter("title"));
+          pstmt.setString(2, req.getParameter("txt"));
+
+          if(pstmt.executeUpdate() == 1){
+              System.out.println("add review success");
+          }
+
+
+       } catch (Exception e) {
+           e.printStackTrace();
+       } finally {
+           DBManager.close(null, pstmt, con);
+       }
+
+    }
+
+
+    public void getReview(HttpServletRequest request) {
+        {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            String sql = "select * from review_test where r_no = ?";
+            try {
+                con = DBManager.connect();
+                pstmt = con.prepareStatement(sql);
+                pstmt.setString(1,request.getParameter("pk"));
+                rs = pstmt.executeQuery();
+
+                ReviewVO vo = null;
+                if (rs.next()) {
+                    vo = new ReviewVO();
+                    vo.setNo(rs.getInt("r_no"));
+                    vo.setTitle(rs.getString("r_title"));
+                    vo.setTxt(rs.getString("r_txt"));
+                    vo.setDate(rs.getDate("r_date"));
+                }
+                request.setAttribute("review", vo);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                DBManager.close(rs, pstmt, con);
+            }
+
+        }
+
+
+    }
+
+    public void updateReview(HttpServletRequest req) {
+        {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+
+            String sql = "update review_test set r_title=?, r_txt=? where r_no=?";
+            try {
+                con = DBManager.connect();
+                pstmt = con.prepareStatement(sql);
+                req.setCharacterEncoding("utf-8");
+
+                pstmt.setString(1, req.getParameter("title"));
+                pstmt.setString(2, req.getParameter("txt"));
+                pstmt.setString(3, req.getParameter("no"));
+
+                if(pstmt.executeUpdate() == 1){
+                    System.out.println("update review success");
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                DBManager.close(null, pstmt, con);
+            }
+
+        }
+
+
+
+    }
+
+    public void getDelete(HttpServletRequest req) {
+        {
+            {
+                Connection con = null;
+                PreparedStatement pstmt = null;
+
+                String sql = "delete from review_test where r_no=?";
+                try {
+                    con = DBManager.connect();
+                    pstmt = con.prepareStatement(sql);
+                    req.setCharacterEncoding("utf-8");
+
+                    pstmt.setString(1, req.getParameter("no"));
+
+
+                    if(pstmt.executeUpdate() == 1){
+                        System.out.println("delete success");
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    DBManager.close(null, pstmt, con);
+                }
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+
+    public void paging(int pageNum, HttpServletRequest req) {
+        req.setAttribute("currentPage", pageNum);
+        ArrayList<ReviewVO> reviews = showAllReview(req);
+        int total = reviews.size();
+        int cnt = 3;
+
+        // 페이지수
+        int totalPage = (int) Math.ceil((double) total / cnt);
+        req.setAttribute("totalPage", totalPage);
+
+        int start = total - (cnt * (pageNum - 1));
+        int end = (pageNum == totalPage) ? -1 : start - (cnt + 1);
+
+        ArrayList<ReviewVO> items = new ArrayList<>();
+        for (int i = start - 1; i > end; i--) {
+            items.add(reviews.get(i));
+        }
+
+        req.setAttribute("reviews", items);
+
+
+    }
+
+
+
+
+
+
+
+
+}
